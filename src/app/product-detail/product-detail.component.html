@@ -1,0 +1,23 @@
+<h1>Đây là trang giới thiệu</h1>
+<p>product-detail works!</p>
+<h2>Hồ sơ Người dùng</h2>
+<p>Đây là trang chi tiết cho ID: <strong>{{ productId }}</strong></p>
+<button (click)="goBack()">Quay lại Trang Chủ</button>
+
+
+<div *ngIf="product" class="product-details">
+    <h4>{{ product.title }}</h4>
+    <p>{{ product.description }}</p>
+
+    <p>
+        <strong>ID:</strong> {{ product.id }} |
+        <strong>Giá:</strong> {{ product.price }}
+    </p>
+</div>
+<button class="btn btn-danger" (click)="onDeleteProduct()">
+    Xóa Sản Phẩm
+</button>
+
+<div *ngIf="!product">
+    <p>Đang tải dữ liệu chi tiết sản phẩm...</p>
+</div>

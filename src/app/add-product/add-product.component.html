@@ -1,0 +1,98 @@
+<p>add-product works!</p>
+<button (click)="goBack()">Quay lại Trang Chủ</button>
+
+<h2>Reactive Form thêm sản phẩm</h2>
+
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+
+    <!--<div class="form-group">
+        <label for="id">ID Sản phẩm (Test)</label>
+        <input type="number" id="id" class="form-control" formControlName="id">
+        <div *ngIf="postForm.get('id')?.invalid && postForm.get('id')?.touched" class="text-danger">
+            <p *ngIf="postForm.get('id')?.errors?.required">ID là bắt buộc.</p>
+            <p *ngIf="postForm.get('id')?.errors?.pattern">ID phải là số nguyên.</p>
+        </div>
+    </div>-->
+    <div class="form-group">
+        <label for="title">Tên Sản phẩm</label>
+        <input type="text" id="title" class="form-control" formControlName="title">
+
+        <div *ngIf="postForm.get('title')?.invalid && postForm.get('title')?.touched" class="text-danger">
+            <p *ngIf="postForm.get('title')?.errors?.required">
+                Tên sản phẩm là bắt buộc.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="price">Giá ($)</label>
+        <input type="number" id="price" class="form-control" formControlName="price">
+
+        <div *ngIf="postForm.get('price')?.invalid && postForm.get('price')?.touched" class="text-danger">
+            <p *ngIf="postForm.get('price')?.errors?.required">
+                Giá là bắt buộc.
+            </p>
+            <p *ngIf="postForm.get('price')?.errors?.min">
+                Giá phải là số dương.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="category">Danh mục</label>
+        <input type="text" id="category" class="form-control" formControlName="category">
+
+        <div *ngIf="postForm.get('category')?.invalid && postForm.get('category')?.touched" class="text-danger">
+            <p *ngIf="postForm.get('category')?.errors?.required">
+                Danh mục là bắt buộc.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="description">Mô tả</label>
+        <textarea id="description" class="form-control" rows="3" formControlName="description"></textarea>
+
+        <div *ngIf="postForm.get('description')?.invalid && postForm.get('description')?.touched" class="text-danger">
+            <p *ngIf="postForm.get('description')?.errors?.required">
+                Mô tả là bắt buộc.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="image">URL Hình ảnh</label>
+        <input type="text" id="image" class="form-control" formControlName="image">
+    </div>
+    <h2>Thông tin Đánh giá (Rating)</h2>
+    <div formGroupName="rating">
+
+        <div class="form-group">
+            <label for="rate">Điểm đánh giá (0-5)</label>
+            <input type="number" id="rate" class="form-control" formControlName="rate">
+            <div *ngIf="postForm.get('rating.rate')?.invalid && postForm.get('rating.rate')?.touched"
+                class="text-danger">
+                <p *ngIf="postForm.get('rating.rate')?.errors?.required">Điểm đánh giá là bắt buộc.</p>
+                <p *ngIf="postForm.get('rating.rate')?.errors?.min || postForm.get('rating.rate')?.errors?.max">
+                    Điểm phải nằm trong khoảng 0 đến 5.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="count">Số lượt đánh giá</label>
+            <input type="number" id="count" class="form-control" formControlName="count">
+            <div *ngIf="postForm.get('rating.count')?.invalid && postForm.get('rating.count')?.touched"
+                class="text-danger">
+                <p *ngIf="postForm.get('rating.count')?.errors?.required">Số lượt đánh giá là bắt buộc.</p>
+                <p *ngIf="postForm.get('rating.count')?.errors?.min">Số lượt đánh giá không thể âm.</p>
+                <p *ngIf="postForm.get('rating.count')?.errors?.pattern">Phải là số nguyên.</p>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <button type="submit" [disabled]="!postForm.valid">
+        Thêm Sản phẩm
+    </button>
+</form>
