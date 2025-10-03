@@ -10,6 +10,7 @@
         <p>{{ post.description | slice:0:150 }}...</p>
 
         <button (click)="goToProductDetail(post.id)">Xem Chi Tiết</button>
+        <button (click)="editProduct(post.id)">Sửa sản phẩm</button>
         <!--<a [routerLink]="['/products', post.id]">Xem Chi Tiết</a>-->
     </div>
 </div>

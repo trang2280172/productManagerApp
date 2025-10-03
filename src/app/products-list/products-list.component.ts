@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService, Post } from '../api.service';
+import { ProductService, Product } from '../product.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,12 +9,12 @@ import { Router } from '@angular/router';
 })
 export class ProductsListComponent implements OnInit {
 
-  posts: Post[] = [];
-  newPostResponse: Post | null = null;
+  posts: Product[] = [];
+  newPostResponse: Product | null = null;
   loading: boolean = false;
   productIdToNavigate: number = 0;
 
-  constructor(private apiService: ApiService, private router: Router) { }
+  constructor(private productService: ProductService, private router: Router) { }
 
   ngOnInit(): void {
     this.fetchPosts();
@@ -22,7 +22,7 @@ export class ProductsListComponent implements OnInit {
 
   fetchPosts(): void {
     this.loading = true;
-    this.apiService.getPosts().subscribe({
+    this.productService.getPosts().subscribe({
       next: (data) => {
         this.posts = data.slice(0, 5);
         console.log('GET Success:', this.posts);
@@ -39,11 +39,19 @@ export class ProductsListComponent implements OnInit {
     this.productIdToNavigate = postId;
     this.router.navigate(['/product', this.productIdToNavigate]);
     console.log(`ID bài đăng cần xử lý: /product/${this.productIdToNavigate}`);
+    this.productIdToNavigate = 0;
   }
 
   addProduct() {
     this.router.navigate(['/products', 'add']);
     console.log(`Đang điều hướng đến /products/add`);
+  }
+
+  editProduct(postId: number): void {
+    this.productIdToNavigate = postId;
+    this.router.navigate(['/product/edit', this.productIdToNavigate])
+    console.log(`ID sản phẩm cần sửa: /product/edit/${this.productIdToNavigate}`);
+    this.productIdToNavigate = 0;
   }
 }
 

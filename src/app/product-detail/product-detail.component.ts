@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService, Post } from './../api.service';
+import { ProductService, Product } from '../product.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -9,10 +9,10 @@ import { ApiService, Post } from './../api.service';
 })
 export class ProductDetailComponent implements OnInit {
 
-  product: Post | null = null;
+  product: Product | null = null;
   productId: number | null = null;
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private productService: ProductService, private router: Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -23,7 +23,7 @@ export class ProductDetailComponent implements OnInit {
 
   detailProduct(): void {
     if (this.productId && !isNaN(this.productId)) {
-      this.apiService.getPostById(this.productId).subscribe({
+      this.productService.getProductById(this.productId).subscribe({
         next: (data) => {
           this.product = data;
           console.log('GET Success:', this.product);
@@ -39,20 +39,25 @@ export class ProductDetailComponent implements OnInit {
     }
   }
   onDeleteProduct(): void {
-    //if (confirm(`Bạn có chắc chắn muốn xóa sản phẩm ID ${this.productId} không?`)) {
     if (this.productId !== null) {
-      this.apiService.deleteProduct(this.productId).subscribe({
-        next: (response) => {
-          console.log('Sản phẩm đã xóa thành công:', response);
-          alert(`Sản phẩm ID ${this.productId} đã được xóa!`);
-          this.router.navigate(['/products']);
-        },
-        error: (err) => {
-          console.error('Lỗi khi xóa sản phẩm:', err);
-          alert('Đã xảy ra lỗi khi xóa sản phẩm. Vui lòng thử lại.');
-        }
-      });
+      if (confirm(`Bạn có chắc chắn muốn xóa sản phẩm ID ${this.productId} không?`)) {
+        this.productService.deleteProduct(this.productId).subscribe({
+          next: (response) => {
+            console.log('Sản phẩm đã xóa thành công:', response);
+            alert(`Sản phẩm ID ${this.productId} đã được xóa!`);
+            this.router.navigate(['/products']);
+          },
+          error: (err) => {
+            console.error('Lỗi khi xóa sản phẩm:', err);
+            alert('Đã xảy ra lỗi khi xóa sản phẩm. Vui lòng thử lại.');
+          }
+        });
+      }
     }
+  }
+  editProduct(): void {
+    this.router.navigate(['/product/edit', this.productId])
+    console.log(`ID sản phẩm cần sửa: /product/edit/${this.productId}`);
   }
 
   goBack() {

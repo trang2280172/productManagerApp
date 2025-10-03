@@ -7,14 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { AddProductComponent } from './add-product/add-product.component';
+import { FormProductComponent } from './form-product/form-product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductsListComponent,
     ProductDetailComponent,
-    AddProductComponent
+    FormProductComponent
   ],
   imports: [
     BrowserModule,
