@@ -56,8 +56,8 @@ export class ProductDetailComponent implements OnInit {
     }
   }
   editProduct(): void {
-    this.router.navigate(['/product/edit', this.productId])
-    console.log(`ID sản phẩm cần sửa: /product/edit/${this.productId}`);
+    this.router.navigate(['/products/edit', this.productId])
+    console.log(`ID sản phẩm cần sửa: /products/edit/${this.productId}`);
   }
 
   goBack() {

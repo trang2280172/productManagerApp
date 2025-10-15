@@ -10,7 +10,7 @@ import { ProductService, Product } from '../product.service';
   styleUrls: ['./form-product.component.css']
 })
 export class FormProductComponent implements OnInit {
-  postForm!: FormGroup;
+  productForm!: FormGroup;
   loading: boolean = false;
   isEditMode: boolean = false;
   productId!: number;
@@ -27,7 +27,7 @@ export class FormProductComponent implements OnInit {
   }
 
   initForm(): void {
-    this.postForm = new FormGroup({
+    this.productForm = new FormGroup({
       'title': new FormControl(null, Validators.required),
       'price': new FormControl(null, [
         Validators.required,
@@ -52,7 +52,7 @@ export class FormProductComponent implements OnInit {
     if (this.isEditMode) {
       this.loading = true;
       this.productService.getProductById(this.productId).subscribe(product => {
-        this.postForm.patchValue({
+        this.productForm.patchValue({
           title: product.title,
           price: product.price,
           description: product.description,
@@ -68,16 +68,16 @@ export class FormProductComponent implements OnInit {
   }
 
   onSubmit() {
-    //console.log('Giá trị form:', this.postForm.value);
-    if (this.postForm.valid) {
+    //console.log('Giá trị form:', this.productForm.value);
+    if (this.productForm.valid) {
       this.loading = true;
-      const formData: Product = this.postForm.value;
+      const formData: Product = this.productForm.value;
       if (this.isEditMode) {
         this.productService.updateProductById(this.productId, formData).subscribe({
           next: (response: Product) => {
             console.log('Sản phẩm sửa thành công', response);
             alert(`Sản phẩm "${response.title}" với ID: ${response.id} đã được sửa`);
-            this.postForm.reset();
+            this.productForm.reset();
             this.router.navigate(['/products']);
           },
           error: (err) => {
@@ -94,7 +94,7 @@ export class FormProductComponent implements OnInit {
           next: (response: Product) => {
             console.log('Sản phẩm thêm thành công', response);
             alert(`Sản phẩm "${response.title}" đã được thêm với ID: ${response.id}`);
-            this.postForm.reset();
+            this.productForm.reset();
           },
           error: (err) => {
             console.error('Lỗi khi thêm sản phẩm:', err);

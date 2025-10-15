@@ -1,14 +1,3 @@
-<h2>Hồ sơ Người dùng</h2>
-<p>Đây là trang chi tiết cho ID: <strong>{{ productId }}</strong></p>
-<div *ngIf="product" class="product-details">
-    <h4>{{ product.title }}</h4>
-    <p>{{ product.description }}</p>
-
-    <p>
-        <strong>ID:</strong> {{ product.id }} |
-        <strong>Giá:</strong> {{ product.price }}
-    </p>
-</div>
 <button (click)="goBack()">Quay lại Trang Chủ</button>
 <button class="btn btn-danger" (click)="onDeleteProduct()">
     Xóa Sản Phẩm
@@ -18,4 +7,20 @@
 
 <div *ngIf="!product">
     <p>Đang tải dữ liệu chi tiết sản phẩm...</p>
+</div>
+<h2>Chi tiết sản phẩm</h2>
+<p>Sản phẩm ID: <strong>{{ productId }}</strong></p>
+<div *ngIf="product" class="product-details">
+    <h4>{{ product.title }}</h4>
+    <p>{{ product.description }}</p>
+    <p>
+        <strong>ID:</strong> {{ product.id }} |
+        <strong>Giá:</strong> {{ product.price }} |
+        <strong>Rate:</strong> {{ product.rating.rate }} |
+        <strong>Count:</strong> {{ product.rating.count }}
+    </p>
+    <p><strong>Category:</strong> {{ product.category }}</p>
+    <p><strong>Hình ảnh:</strong> </p>
+    <img [src]="product.image" alt="{{ product.title }}" class="product-image">
+
 </div>

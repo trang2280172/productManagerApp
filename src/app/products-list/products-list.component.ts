@@ -9,23 +9,28 @@ import { Router } from '@angular/router';
 })
 export class ProductsListComponent implements OnInit {
 
-  posts: Product[] = [];
-  newPostResponse: Product | null = null;
+  products: Product[] = [];
+  allProducts: Product[] = [];
+  searchTerm: string = '';
   loading: boolean = false;
   productIdToNavigate: number = 0;
+  minPrice: number | null = null;
+  maxPrice: number | null = null;
 
   constructor(private productService: ProductService, private router: Router) { }
 
   ngOnInit(): void {
-    this.fetchPosts();
+    this.fetchProducts();
   }
 
-  fetchPosts(): void {
+  fetchProducts(): void {
     this.loading = true;
-    this.productService.getPosts().subscribe({
+    this.productService.getProducts().subscribe({
       next: (data) => {
-        this.posts = data.slice(0, 5);
-        console.log('GET Success:', this.posts);
+        this.allProducts = data;
+        this.products = data;
+        //this.products = data.slice(0, 5);
+        console.log('GET Success:', this.products);
       },
       error: (err) => console.error('GET Error:', err),
       complete: () => {
@@ -35,22 +40,33 @@ export class ProductsListComponent implements OnInit {
     });
   }
 
-  goToProductDetail(postId: number): void {
-    this.productIdToNavigate = postId;
-    this.router.navigate(['/product', this.productIdToNavigate]);
+  onSearch(): void {
+    const term = this.searchTerm.toLowerCase();
+    if (!term || term.length === 0) {
+      this.products = this.allProducts;
+      return;
+    }
+    this.products = this.allProducts.filter(product =>
+      product.title.toLowerCase().includes(term)
+    );
+  }
+
+  goToProductDetail(productId: number): void {
+    this.productIdToNavigate = productId;
+    this.router.navigate(['/products', this.productIdToNavigate]);
     console.log(`ID bài đăng cần xử lý: /product/${this.productIdToNavigate}`);
     this.productIdToNavigate = 0;
   }
 
   addProduct() {
-    this.router.navigate(['/products', 'add']);
+    this.router.navigate(['/products/add']);
     console.log(`Đang điều hướng đến /products/add`);
   }
 
-  editProduct(postId: number): void {
-    this.productIdToNavigate = postId;
-    this.router.navigate(['/product/edit', this.productIdToNavigate])
-    console.log(`ID sản phẩm cần sửa: /product/edit/${this.productIdToNavigate}`);
+  editProduct(productId: number): void {
+    this.productIdToNavigate = productId;
+    this.router.navigate(['/products/edit', this.productIdToNavigate])
+    console.log(`ID sản phẩm cần sửa: /products/edit/${this.productIdToNavigate}`);
     this.productIdToNavigate = 0;
   }
 }

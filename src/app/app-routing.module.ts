@@ -7,12 +7,10 @@ import { FormProductComponent } from './form-product/form-product.component';
 
 const routes: Routes = [
   { path: 'products', component: ProductsListComponent },
-  { path: 'product/:id', component: ProductDetailComponent },
-  { path: '', redirectTo: '/products', pathMatch: 'full' },
   { path: 'products/add', component: FormProductComponent },
-  { path: 'product/edit/:id', component: FormProductComponent },
-
-
+  { path: 'products/edit/:id', component: FormProductComponent },
+  { path: 'products/:id', component: ProductDetailComponent },
+  { path: '', redirectTo: '/products', pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -26,12 +26,12 @@ export class ProductService {
   private baseUrl = 'https://fakestoreapi.com/products';
   constructor(private http: HttpClient) { }
 
-  getPosts(): Observable<Product[]> {
+  getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.baseUrl);
   }
 
-  createProduct(postData: Product): Observable<Product> {
-    return this.http.post<Product>(this.baseUrl, postData);
+  createProduct(productData: Product): Observable<Product> {
+    return this.http.post<Product>(this.baseUrl, productData);
   }
   getProductById(id: number): Observable<Product> {
     const url = `${this.baseUrl}/${id}`;
