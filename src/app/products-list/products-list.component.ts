@@ -60,7 +60,7 @@ export class ProductsListComponent implements OnInit {
 
   addProduct() {
     this.router.navigate(['/products/add']);
-    console.log(`Đang điều hướng đến /products/add`);
+    console.log(`Đang điều hướng đến/products/add`);
   }
 
   editProduct(productId: number): void {
